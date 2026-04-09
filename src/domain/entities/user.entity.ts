@@ -17,7 +17,7 @@ export class User {
     public isActive: boolean,
     public readonly createdAt: Date,
     public updatedAt: Date,
-  ) {}
+  ) { }
 
   // Reglas de negocio
   isAdmin(): boolean {

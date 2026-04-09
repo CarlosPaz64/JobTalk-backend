@@ -2,7 +2,7 @@
 // Esta clase representa un chat en el sistema. Contiene propiedades y métodos relacionados con la lógica de negocio del chat.
 // La clase Chat es una entidad que representa un chat en el sistema. Contiene propiedades como id, name, type, createdById, memberIds, isActive, createdAt y updatedAt. Además, tiene métodos para verificar si el chat es global, si un usuario es miembro del chat, agregar un miembro al chat, eliminar un miembro del chat y renombrar el chat. Estas reglas de negocio aseguran que el estado del chat se mantenga consistente y que las operaciones se realicen de manera controlada.
 export enum ChatType {
-    // Un chat privado es un chat entre dos usuarios, mientras que un chat global es un chat al que pueden unirse múltiples usuarios. Esto determina las reglas de negocio para agregar y eliminar miembros del chat.
+  // Un chat privado es un chat entre dos usuarios, mientras que un chat global es un chat al que pueden unirse múltiples usuarios. Esto determina las reglas de negocio para agregar y eliminar miembros del chat.
   PRIVATE = 'private',
   // Un chat global es un chat al que pueden unirse múltiples usuarios, mientras que un chat privado es un chat entre dos usuarios. Esto determina las reglas de negocio para agregar y eliminar miembros del chat.
   GLOBAL = 'global',
@@ -10,7 +10,7 @@ export enum ChatType {
 
 // La clase Chat es una entidad que representa un chat en el sistema. Contiene propiedades como id, name, type, createdById, memberIds, isActive, createdAt y updatedAt. Además, tiene métodos para verificar si el chat es global, si un usuario es miembro del chat, agregar un miembro al chat, eliminar un miembro del chat y renombrar el chat. Estas reglas de negocio aseguran que el estado del chat se mantenga consistente y que las operaciones se realicen de manera controlada.
 export class Chat {
-    // El constructor de la clase Chat inicializa las propiedades del chat, como id, name, type, createdById, memberIds, isActive, createdAt y updatedAt. Estas propiedades son esenciales para definir el estado del chat y su comportamiento en el sistema.
+  // El constructor de la clase Chat inicializa las propiedades del chat, como id, name, type, createdById, memberIds, isActive, createdAt y updatedAt. Estas propiedades son esenciales para definir el estado del chat y su comportamiento en el sistema.
   constructor(
     public readonly id: string,
     public name: string,
@@ -22,7 +22,7 @@ export class Chat {
     public isActive: boolean,
     public readonly createdAt: Date,
     public updatedAt: Date,
-  ) {}
+  ) { }
 
   // Reglas de negocio
   isGlobal(): boolean {

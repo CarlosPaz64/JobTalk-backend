@@ -25,13 +25,13 @@ export class Message {
     public isDeleted: boolean,
     public readonly createdAt: Date,
     public updatedAt: Date,
-  ) {}
+  ) { }
 
   // Reglas de negocio
   markAsRead(userId: string): void {
     // Un mensaje solo puede ser marcado como leído por un usuario si el ID del usuario no está ya incluido en la lista de readByIds del mensaje. Esto evita que se intente marcar un mensaje como leído por un usuario que ya lo ha leído, lo que podría causar inconsistencias en el estado del mensaje.
     if (!this.readByIds.includes(userId)) {
-        // Al marcar un mensaje como leído por un usuario, se añade su ID a la lista de readByIds del mensaje y se actualiza la fecha de actualización para reflejar el cambio de estado.
+      // Al marcar un mensaje como leído por un usuario, se añade su ID a la lista de readByIds del mensaje y se actualiza la fecha de actualización para reflejar el cambio de estado.
       this.readByIds.push(userId);
     }
   }

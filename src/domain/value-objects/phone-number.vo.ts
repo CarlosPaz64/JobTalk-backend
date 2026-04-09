@@ -1,6 +1,6 @@
 // Value Object para el número de teléfono
 export class PhoneNumber {
-    // Valor del número de teléfono en formato E.164
+  // Valor del número de teléfono en formato E.164
   private readonly value: string;
 
   // Formato E.164: +521234567890
