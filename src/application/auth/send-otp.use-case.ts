@@ -11,8 +11,17 @@ export interface IMessagingService {
     sendOtp(phone: string, channel: 'sms' | 'whatsapp'): Promise<string>;
 }
 
+// Puerto de salida — el dominio define qué necesita para verificar el OTP
+export interface IOtpVerifier {
+    // Método para verificar el OTP, el dominio no se preocupa por cómo se implementa
+    verifyOtp(phone: string, code: string): Promise<boolean>;
+}
+
 // Constante para identificar el servicio de mensajería en la inyección de dependencias
 export const MESSAGING_SERVICE = 'IMessagingService';
+// Constante para identificar el verificador de OTP en la inyección de dependencias
+export const OTP_VERIFIER = 'IOtpVerifier';
+
 
 // Interfaz para el DTO de entrada del caso de uso
 export interface SendOtpDto {
