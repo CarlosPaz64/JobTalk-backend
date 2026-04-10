@@ -4,7 +4,8 @@ import { User } from '../entities/user.entity';
 export interface IUserRepository {
     // Métodos para interactuar con la fuente de datos de usuarios
     findById(id: string): Promise<User | null>;
-    findByPhone(phone: string): Promise<User | null>;
+    // Ahora buscará por correo y no por teléfono
+    findByEmail(email: string): Promise<User | null>;
     findAll(): Promise<User[]>;
     save(user: User): Promise<User>;
     update(user: User): Promise<User>;
