@@ -18,7 +18,7 @@ export class UserOrmEntity {
 
     // Decorador @Column indica que esta propiedad se mapeará a una columna en la tabla 'users' y debe ser única
     @Column({ unique: true })
-    phone!: string;
+    email!: string;
 
     @Column()
     name!: string;

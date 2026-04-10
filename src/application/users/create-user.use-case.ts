@@ -3,13 +3,13 @@ import { Inject, Injectable } from '@nestjs/common';
 import { USER_REPOSITORY } from '../../domain/repositories/user.repository';
 import type { IUserRepository } from '../../domain/repositories/user.repository';
 import { User } from '../../domain/entities/user.entity';
-import { PhoneNumber } from '../../domain/value-objects/email.vo';
+import { Email } from '../../domain/value-objects/email.vo';
 import { UserRole } from '../../domain/value-objects/user-role.vo';
 import { v4 as uuidv4 } from 'uuid';
 
 // Interfaz para el DTO de entrada del caso de uso
 export interface CreateUserDto {
-    phone: string;
+    email: string;
     name: string;
     // El rol es opcional, por defecto será USER, pero se puede especificar ADMIN si es necesario
     role?: UserRole;
@@ -29,13 +29,12 @@ export class CreateUserUseCase {
     // El método execute es el punto de entrada para ejecutar la lógica del caso de uso, recibe un DTO con los datos necesarios para crear el usuario y retorna el usuario creado
     async execute(dto: CreateUserDto): Promise<User> {
         // Validamos el formato del número antes de hacer cualquier llamada externa, si el formato es inválido el constructor de PhoneNumber lanzará un error que el controlador puede manejar adecuadamente
-        const phoneNumber = new PhoneNumber(dto.phone);
-
+        const email = new Email(dto.email);
         // Verificamos si ya existe un usuario registrado con el mismo número de teléfono, si existe lanzamos un error para que el controlador pueda manejarlo adecuadamente
-        const existing = await this.userRepository.findByPhone(phoneNumber.getValue());
+        const existing = await this.userRepository.findByEmail(email.getValue());
         // Si existe un usuario registrado con el mismo número de teléfono, lanzamos un error para que el controlador pueda manejarlo adecuadamente, evitando así la creación de usuarios duplicados
         if (existing) {
-            throw new Error('Ya existe un usuario con este número de teléfono');
+            throw new Error('Ya existe un usuario con este correo electrónico');
         }
 
         // Constante para la fecha actual, que se usará para los campos createdAt y updatedAt del usuario, asegurando que ambos campos tengan el mismo valor al momento de la creación
@@ -43,7 +42,7 @@ export class CreateUserUseCase {
         // Creamos una nueva instancia de User con los datos proporcionados en el DTO, generando un ID único con uuidv4, y estableciendo isVerified en false porque el usuario se verificará después mediante OTP, y isActive en true para que el usuario pueda iniciar sesión una vez verificado
         const user = new User(
             uuidv4(),
-            phoneNumber,
+            email,
             // Trimamos el nombre para eliminar espacios en blanco al inicio y al final, asegurando que el nombre almacenado sea limpio y consistente
             dto.name.trim(),
             // Rol por defecto para los usuarios, si no se especifica en el DTO se asignará USER, pero si se proporciona un rol válido se usará ese valor, permitiendo flexibilidad en la creación de usuarios con diferentes roles

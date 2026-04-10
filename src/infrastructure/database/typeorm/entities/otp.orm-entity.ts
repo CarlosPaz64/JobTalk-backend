@@ -4,7 +4,6 @@ import {
     Entity,
     PrimaryColumn,
 } from 'typeorm';
-import { OtpChannel } from 'src/domain/entities/otp.entity';
 
 @Entity('otps')
 export class OtpOrmEntity {
@@ -12,13 +11,10 @@ export class OtpOrmEntity {
     id!: string;
 
     @Column()
-    phone!: string;
+    email!: string;
 
     @Column()
     code!: string;
-
-    @Column({ type: 'enum', enum: OtpChannel })
-    channel!: OtpChannel;
 
     @Column()
     expiresAt!: Date;

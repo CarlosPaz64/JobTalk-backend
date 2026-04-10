@@ -2,7 +2,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { USER_REPOSITORY } from '../../domain/repositories/user.repository';
 import type { IUserRepository } from '../../domain/repositories/user.repository';
-import { PhoneNumber } from '../../domain/value-objects/email.vo';
+import { Email } from '../../domain/value-objects/email.vo';
 
 // Puerto de salida — el dominio define qué necesita del servicio de tokens
 export interface ITokenService {
@@ -18,7 +18,7 @@ export const TOKEN_SERVICE = 'ITokenService';
 // Puerto de salida — el dominio define qué necesita del verificador de OTP
 export interface IOtpVerifier {
     //  Método para verificar el OTP, el dominio no se preocupa por cómo se implementa
-    verifyOtp(phone: string, code: string): Promise<boolean>;
+    verifyOtp(email: string, code: string): Promise<boolean>;
 }
 
 // Constante para identificar el verificador de OTP en la inyección de dependencias
@@ -26,7 +26,7 @@ export const OTP_VERIFIER = 'IOtpVerifier';
 
 // Interfaz para el DTO de entrada del caso de uso
 export interface VerifyOtpDto {
-    phone: string;
+    email: string;
     code: string;
 }
 
@@ -48,19 +48,19 @@ export class VerifyOtpUseCase {
 
     // El método execute es el punto de entrada para ejecutar la lógica del caso de uso
     async execute(dto: VerifyOtpDto): Promise<{ accessToken: string; refreshToken: string }> {
-        // Validamos el formato del número antes de hacer cualquier llamada externa
-        const phoneNumber = new PhoneNumber(dto.phone);
+        // Validamos el formato del correo electrónico antes de hacer cualquier llamada externa
+        const email = new Email(dto.email);
 
         // Verificamos el código OTP utilizando el verificador de OTP, si no es válido lanzamos un error para que el controlador pueda manejarlo adecuadamente
-        const isValid = await this.otpVerifier.verifyOtp(phoneNumber.getValue(), dto.code);
+        const isValid = await this.otpVerifier.verifyOtp(email.getValue(), dto.code);
         // Si el código OTP no es válido o ha expirado, lanzamos un error para que el controlador pueda manejarlo adecuadamente
         if (!isValid) {
             throw new Error('Código OTP inválido o expirado');
         }
 
-        // Si el código OTP es válido, buscamos al usuario asociado al número de teléfono proporcionado
-        const user = await this.userRepository.findByPhone(phoneNumber.getValue());
-        // Si no existe un usuario registrado con el número de teléfono proporcionado, lanzamos un error para que el controlador pueda manejarlo adecuadamente
+        // Si el código OTP es válido, buscamos al usuario asociado al correo electrónico proporcionado
+        const user = await this.userRepository.findByEmail(email.getValue());
+        // Si no existe un usuario registrado con el correo electrónico proporcionado, lanzamos un error para que el controlador pueda manejarlo adecuadamente
         if (!user) {
             throw new Error('Usuario no encontrado');
         }

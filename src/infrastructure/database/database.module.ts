@@ -18,6 +18,11 @@ import { USER_REPOSITORY } from '../../domain/repositories/user.repository';
 import { CHAT_REPOSITORY } from '../../domain/repositories/chat.repository';
 import { MESSAGE_REPOSITORY } from '../../domain/repositories/message.repository';
 
+import { ResendService } from '../messaging/resend.service';
+
+import { MESSAGING_SERVICE } from '../../application/auth/send-otp.use-case';
+import { OTP_VERIFIER } from '../../application/auth/verify-otp.use-case';
+
 // Decorador Module marca esta clase como un módulo de NestJS, lo que permite organizar el código en módulos lógicos y gestionar las dependencias de manera eficiente, siguiendo los principios de modularidad y separación de responsabilidades en la aplicación
 @Module({
     // Se realizan los importes necesarios para configurar la conexión a la base de datos y registrar las entidades y repositorios que se utilizarán en la aplicación, lo que permite a NestJS gestionar la inyección de dependencias y el ciclo de vida de estos componentes de manera eficiente, siguiendo los principios de inversión de dependencias y separación de responsabilidades en la arquitectura hexagonal
@@ -48,6 +53,8 @@ import { MESSAGE_REPOSITORY } from '../../domain/repositories/message.repository
     providers: [
         // Aquí ocurre la magia del DIP:
         // NestJS inyectará UserTypeOrmRepository cada vez que alguien pida USER_REPOSITORY
+        { provide: MESSAGING_SERVICE, useClass: ResendService },
+        { provide: OTP_VERIFIER, useClass: ResendService },
         { provide: USER_REPOSITORY, useClass: UserTypeOrmRepository },
         { provide: CHAT_REPOSITORY, useClass: ChatTypeOrmRepository },
         { provide: MESSAGE_REPOSITORY, useClass: MessageTypeOrmRepository },

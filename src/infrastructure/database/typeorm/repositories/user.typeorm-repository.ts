@@ -24,8 +24,8 @@ export class UserTypeOrmRepository implements IUserRepository {
         return orm ? UserMapper.toDomain(orm) : null;
     }
 
-    async findByPhone(phone: string): Promise<User | null> {
-        const orm = await this.repo.findOne({ where: { phone } });
+    async findByEmail(email: string): Promise<User | null> {
+        const orm = await this.repo.findOne({ where: { email } });
         return orm ? UserMapper.toDomain(orm) : null;
     }
 
