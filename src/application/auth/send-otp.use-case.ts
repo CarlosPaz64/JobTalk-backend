@@ -3,7 +3,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { USER_REPOSITORY } from '../../domain/repositories/user.repository';
 import type { IUserRepository } from '../../domain/repositories/user.repository';
-import { PhoneNumber } from '../../domain/value-objects/phone-number.vo';
+import { PhoneNumber } from '../../domain/value-objects/email.vo';
 
 // Puerto de salida — el dominio define qué necesita del servicio de mensajería
 export interface IMessagingService {

@@ -3,7 +3,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { USER_REPOSITORY } from '../../domain/repositories/user.repository';
 import type { IUserRepository } from '../../domain/repositories/user.repository';
 import { User } from '../../domain/entities/user.entity';
-import { PhoneNumber } from '../../domain/value-objects/phone-number.vo';
+import { PhoneNumber } from '../../domain/value-objects/email.vo';
 import { UserRole } from '../../domain/value-objects/user-role.vo';
 import { v4 as uuidv4 } from 'uuid';
 

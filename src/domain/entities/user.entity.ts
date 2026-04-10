@@ -1,13 +1,14 @@
 /* User entity */
 // Esta clase representa a un usuario en el sistema. Contiene propiedades y métodos relacionados con la lógica de negocio del usuario.
-import { PhoneNumber } from '../value-objects/phone-number.vo';
+import { Email } from '../value-objects/email.vo';
 import { UserRole } from '../value-objects/user-role.vo';
 
-// La clase User es una entidad que representa a un usuario en el sistema. Contiene propiedades como id, phoneNumber, name, role, isVerified, isActive, createdAt y updatedAt. Además, tiene métodos para verificar si el usuario es admin, si puede enviar mensajes, desactivar al usuario, verificar al usuario y actualizar su nombre. Estas reglas de negocio aseguran que el estado del usuario se mantenga consistente y que las operaciones se realicen de manera controlada.
+// La clase User es una entidad que representa a un usuario en el sistema. Contiene propiedades como id, email, name, role, isVerified, isActive, createdAt y updatedAt. Además, tiene métodos para verificar si el usuario es admin, si puede enviar mensajes, desactivar al usuario, verificar al usuario y actualizar su nombre. Estas reglas de negocio aseguran que el estado del usuario se mantenga consistente y que las operaciones se realicen de manera controlada.
 export class User {
   constructor(
     public readonly id: string,
-    public readonly phoneNumber: PhoneNumber,
+    // Cambio de numero de telefono a correo para una mejor identificación del usuario y para facilitar la comunicación.
+    public readonly email: Email,
     public name: string,
     // El rol del usuario puede ser 'admin' o 'user', lo que determina sus permisos en el sistema.
     public role: UserRole,

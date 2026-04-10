@@ -1,5 +1,5 @@
 import { User } from 'src/domain/entities/user.entity';
-import { PhoneNumber } from 'src/domain/value-objects/phone-number.vo';
+import { PhoneNumber } from 'src/domain/value-objects/email.vo';
 import { UserOrmEntity } from '../entities/user.orm-entity';
 
 // El UserMapper es responsable de convertir entre la entidad de dominio User y la entidad de base de datos UserOrmEntity

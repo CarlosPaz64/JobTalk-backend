@@ -1,20 +1,14 @@
 /* OTP entity */
-// Esta clase representa un OTP generado para un número de teléfono específico, con un código, canal de envío, fecha de expiración y estado de uso. Contiene métodos para validar el OTP, marcarlo como usado y verificar si ha expirado.
-export enum OtpChannel {
-    SMS = 'sms',
-    WHATSAPP = 'whatsapp',
-}
-
+// Cambio de la verificación de número telefónico a correo electrónico
 // OTP entity
 export class Otp {
     constructor(
         public readonly id: string,
-        // El número de teléfono al que se envió el OTP
-        public readonly phone: string,
+        // El correo electrónico al que se envió el OTP
+        public readonly email: string,
         // El código OTP generado
         public readonly code: string,
-        // El canal por el que se envió el OTP (SMS o WhatsApp)
-        public readonly channel: OtpChannel,
+        // La fecha y hora de expiración del OTP
         public readonly expiresAt: Date,
         // Indica si el OTP ya fue utilizado
         public isUsed: boolean,
