@@ -23,6 +23,8 @@ import { ResendService } from '../messaging/resend.service';
 import { MESSAGING_SERVICE } from '../../application/auth/send-otp.use-case';
 import { OTP_VERIFIER } from '../../application/auth/verify-otp.use-case';
 
+import { SupabaseStorageService } from '../storage/supabase-storage.service';
+
 // Decorador Module marca esta clase como un módulo de NestJS, lo que permite organizar el código en módulos lógicos y gestionar las dependencias de manera eficiente, siguiendo los principios de modularidad y separación de responsabilidades en la aplicación
 @Module({
     // Se realizan los importes necesarios para configurar la conexión a la base de datos y registrar las entidades y repositorios que se utilizarán en la aplicación, lo que permite a NestJS gestionar la inyección de dependencias y el ciclo de vida de estos componentes de manera eficiente, siguiendo los principios de inversión de dependencias y separación de responsabilidades en la arquitectura hexagonal
@@ -61,8 +63,10 @@ import { OTP_VERIFIER } from '../../application/auth/verify-otp.use-case';
         UserTypeOrmRepository,
         ChatTypeOrmRepository,
         MessageTypeOrmRepository,
+        ResendService,
+        SupabaseStorageService,
     ],
     // Al exportar los repositorios con sus tokens de inyección, permitimos que otros módulos que importen DatabaseModule puedan acceder a estos repositorios a través de la inyección de dependencias, lo que facilita la reutilización y la integración de la capa de persistencia en toda la aplicación, siguiendo los principios de modularidad y separación de responsabilidades en la arquitectura hexagonal
-    exports: [USER_REPOSITORY, CHAT_REPOSITORY, MESSAGE_REPOSITORY],
+    exports: [USER_REPOSITORY, CHAT_REPOSITORY, MESSAGE_REPOSITORY, MESSAGING_SERVICE, OTP_VERIFIER, SupabaseStorageService, UserTypeOrmRepository, ChatTypeOrmRepository, MessageTypeOrmRepository, ResendService],
 })
 export class DatabaseModule { }
