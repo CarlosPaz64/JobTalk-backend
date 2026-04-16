@@ -30,8 +30,7 @@ export interface SendOtpDto {
 
 // Interfaz para el DTO de entrada del caso de uso
 export interface SendOtpDto {
-    phone: string;
-    channel: 'sms' | 'whatsapp';
+    email: string;
 }
 
 // El caso de uso implementa la lógica de negocio para enviar un OTP
