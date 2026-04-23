@@ -43,6 +43,9 @@ import { SupabaseStorageService } from '../storage/supabase-storage.service';
                 database: config.get<string>('DB_NAME'),
                 entities: [UserOrmEntity, ChatOrmEntity, MessageOrmEntity, OtpOrmEntity],
                 synchronize: config.get<string>('NODE_ENV') !== 'production',
+                extra: {
+                    family: 4, // Forzar IPv4 para evitar problemas de conexión en algunos entornos, especialmente en sistemas operativos que pueden tener problemas con IPv6, lo que mejora la compatibilidad y la estabilidad de la conexión a la base de datos en diferentes entornos de desarrollo y producción
+                }
             }),
         }),
         TypeOrmModule.forFeature([
