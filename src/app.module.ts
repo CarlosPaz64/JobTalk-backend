@@ -21,6 +21,9 @@ import { CreateChatUseCase } from './application/chats/create-chat.use-case';
 import { AddMemberUseCase } from './application/chats/add-member.use-case';
 import { SendMessageUseCase } from './application/messages/send-message.use-case';
 
+import { JwtRefreshStrategy } from './infrastructure/auth/jwt-refresh.strategy';
+import { RefreshTokenUseCase } from './application/auth/refresh-token.use-case';
+
 import { TOKEN_SERVICE } from './application/auth/verify-otp.use-case';
 
 @Module({
@@ -59,6 +62,10 @@ import { TOKEN_SERVICE } from './application/auth/verify-otp.use-case';
 
     // WebSocket Gateway
     ChatGateway,
+
+    // Estrategia para el refresco del token JWT
+    JwtRefreshStrategy,
+    RefreshTokenUseCase,
   ],
 })
 export class AppModule { }
