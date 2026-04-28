@@ -14,7 +14,7 @@ export async function seedAdmin(dataSource: DataSource): Promise<void> {
 
   // Validación de la existencia de un usuario con el correo electrónico '
   const existing = await userRepo.findOne({
-    where: { email: 'admin@jobtalk.com' },
+    where: { email: 'locotaco857@gmail.com' },
   });
 
   // Si existe un usuario con el correo electrónico '
@@ -26,7 +26,7 @@ export async function seedAdmin(dataSource: DataSource): Promise<void> {
   // Caso contrario, se crea un nuevo usuario administrador con los detalles especificados, incluyendo un ID único generado por uuidv4, el correo electrónico '
   const admin = userRepo.create({
     id: uuidv4(),
-    email: 'admin@jobtalk.com',
+    email: 'locotaco857@gmail.com',
     name: 'Administrador',
     role: UserRole.ADMIN,
     isVerified: true,

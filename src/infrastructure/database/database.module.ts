@@ -25,6 +25,9 @@ import { OTP_VERIFIER } from '../../application/auth/verify-otp.use-case';
 
 import { SupabaseStorageService } from '../storage/supabase-storage.service';
 
+import { OtpTypeOrmRepository } from './typeorm/repositories/otp.typeorm-repository';
+import { IOtpRepository, OTP_REPOSITORY } from '../../domain/repositories/otp.repository';
+
 // Decorador Module marca esta clase como un módulo de NestJS, lo que permite organizar el código en módulos lógicos y gestionar las dependencias de manera eficiente, siguiendo los principios de modularidad y separación de responsabilidades en la aplicación
 @Module({
     // Se realizan los importes necesarios para configurar la conexión a la base de datos y registrar las entidades y repositorios que se utilizarán en la aplicación, lo que permite a NestJS gestionar la inyección de dependencias y el ciclo de vida de estos componentes de manera eficiente, siguiendo los principios de inversión de dependencias y separación de responsabilidades en la arquitectura hexagonal
@@ -63,6 +66,8 @@ import { SupabaseStorageService } from '../storage/supabase-storage.service';
         { provide: USER_REPOSITORY, useClass: UserTypeOrmRepository },
         { provide: CHAT_REPOSITORY, useClass: ChatTypeOrmRepository },
         { provide: MESSAGE_REPOSITORY, useClass: MessageTypeOrmRepository },
+        { provide: OTP_REPOSITORY, useClass: OtpTypeOrmRepository },
+        OtpTypeOrmRepository,
         UserTypeOrmRepository,
         ChatTypeOrmRepository,
         MessageTypeOrmRepository,
@@ -70,6 +75,6 @@ import { SupabaseStorageService } from '../storage/supabase-storage.service';
         SupabaseStorageService,
     ],
     // Al exportar los repositorios con sus tokens de inyección, permitimos que otros módulos que importen DatabaseModule puedan acceder a estos repositorios a través de la inyección de dependencias, lo que facilita la reutilización y la integración de la capa de persistencia en toda la aplicación, siguiendo los principios de modularidad y separación de responsabilidades en la arquitectura hexagonal
-    exports: [USER_REPOSITORY, CHAT_REPOSITORY, MESSAGE_REPOSITORY, MESSAGING_SERVICE, OTP_VERIFIER, SupabaseStorageService, UserTypeOrmRepository, ChatTypeOrmRepository, MessageTypeOrmRepository, ResendService],
+    exports: [USER_REPOSITORY, CHAT_REPOSITORY, MESSAGE_REPOSITORY, MESSAGING_SERVICE, OTP_VERIFIER, SupabaseStorageService, UserTypeOrmRepository, ChatTypeOrmRepository, MessageTypeOrmRepository, ResendService, OTP_REPOSITORY],
 })
 export class DatabaseModule { }
