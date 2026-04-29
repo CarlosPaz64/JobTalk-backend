@@ -17,6 +17,8 @@ import { UserRole } from '../../../domain/value-objects/user-role.vo';
 import { CreateUserUseCase } from '../../../application/users/create-user.use-case';
 import { DeleteUserUseCase } from '../../../application/users/delete-user.use-case';
 import { CreateUserRequestDto } from './dtos/create-user.dto';
+import { IUserRepository, USER_REPOSITORY } from 'src/domain/repositories/user.repository';
+import { Inject } from '@nestjs/common';
 
 // Decorador que especifica que esta clase es un controlador y que manejará las rutas bajo '/users'
 @Controller('users')
@@ -25,7 +27,17 @@ export class UsersController {
     constructor(
         private readonly createUserUseCase: CreateUserUseCase,
         private readonly deleteUserUseCase: DeleteUserUseCase,
+        @Inject(USER_REPOSITORY)
+        private readonly userRepository: IUserRepository
     ) { }
+
+    // Decorador para obtener usuarios
+    @Get()
+    @UseGuards(JwtGuard, RolesGuard)
+    @Roles(UserRole.ADMIN)
+    findAll() {
+        return this.userRepository.findAll();
+    }
 
     @Post()
     // Decorador Body para indicar que el DTO se recibirá en el cuerpo de la solicitud

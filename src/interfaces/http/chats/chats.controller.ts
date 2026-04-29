@@ -40,7 +40,7 @@ export class ChatsController {
     @Get()
     async findAll(@CurrentUser() requester: { id: string }) {
         const user = await this.userRepository.findById(requester.id);
-        if (user?.isAdmin()) {
+        if(user?.isAdmin()) {
             return this.chatRepository.findAll();
         }
         return this.chatRepository.findByMemberId(requester.id);
