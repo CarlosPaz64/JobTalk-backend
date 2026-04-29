@@ -18,6 +18,9 @@ import { CreateChatUseCase } from '../../../application/chats/create-chat.use-ca
 import { AddMemberUseCase } from '../../../application/chats/add-member.use-case';
 import { CreateChatRequestDto } from './dtos/create-chat.dto';
 import { AddMemberRequestDto } from './dtos/add-member.dto';
+import { IChatRepository, CHAT_REPOSITORY } from 'src/domain/repositories/chat.repository';
+import { IUserRepository, USER_REPOSITORY } from 'src/domain/repositories/user.repository';
+import { Inject } from '@nestjs/common';
 
 // Decorador que define esta clase como un controlador de NestJS para la ruta 'chats'
 @Controller('chats')
@@ -27,7 +30,28 @@ export class ChatsController {
     constructor(
         private readonly createChatUseCase: CreateChatUseCase,
         private readonly addMemberUseCase: AddMemberUseCase,
+        @Inject(CHAT_REPOSITORY)
+        private readonly chatRepository: IChatRepository,
+        @Inject(USER_REPOSITORY)
+        private readonly userRepository: IUserRepository,
     ) { }
+
+    // Decorador para obtener todos los chats
+    @Get()
+    async findAll(@CurrentUser() requester: { id: string }) {
+        const user = await this.userRepository.findById(requester.id);
+        if (user?.isAdmin()) {
+            return this.chatRepository.findAll();
+        }
+        return this.chatRepository.findByMemberId(requester.id);
+    }
+
+    // Decorador para obtener un chat
+    @Get(':id')
+    // Se inyecta el decorador de parámetros, dándole el id como requisito
+    findOne(@Param('id') id: string) {
+        return this.chatRepository.findById(id);
+    }
 
     @Post()
     // Decorador que indica que esta ruta solo puede ser accedida por usuarios con el rol de ADMIN
